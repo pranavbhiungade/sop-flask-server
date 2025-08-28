@@ -135,7 +135,6 @@
 #     app.run(debug=True)
 
 
-
 from flask import Flask
 from models import db
 from routes import register_routes
@@ -156,3 +155,4 @@ register_routes(app)
 
 if __name__ == "__main__":
     app.run(debug=True)
+

@@ -5,5 +5,38 @@
 </head>
 <body>
     <h1>Hello, {{ name }} 👋</h1>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask App Home</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f8f9fa; margin: 0; padding: 0; }
+        .container { max-width: 600px; margin: 60px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 32px; }
+        h1 { color: #007bff; }
+        p { color: #333; }
+        .api-list { margin-top: 24px; }
+        .api-list li { margin-bottom: 8px; }
+    </style>
+    <div class="container">
+        <h1>Welcome to the Flask App</h1>
+        <p>This is the home page. The backend provides REST API endpoints for Users, Services, and SOPs.</p>
+        <ul class="api-list">
+            <li>GET /users</li>
+            <li>POST /users</li>
+            <li>GET /users/&lt;id&gt;</li>
+            <li>PUT /users/&lt;id&gt;</li>
+            <li>DELETE /users/&lt;id&gt;</li>
+            <li>GET /services</li>
+            <li>POST /services</li>
+            <li>GET /services/&lt;id&gt;</li>
+            <li>PUT /services/&lt;id&gt;</li>
+            <li>DELETE /services/&lt;id&gt;</li>
+            <li>GET /sops</li>
+            <li>POST /sops</li>
+            <li>GET /sops/&lt;id&gt;</li>
+            <li>PUT /sops/&lt;id&gt;</li>
+            <li>DELETE /sops/&lt;id&gt;</li>
+            <li>GET /sops_grouped</li>
+        </ul>
+    </div>
 </body>
 </html>
