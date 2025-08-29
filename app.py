@@ -153,6 +153,9 @@ with app.app_context():
 # Register routes
 register_routes(app)
 
+
+# Only run the server if executed directly, not when using 'flask run'
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)
+
 

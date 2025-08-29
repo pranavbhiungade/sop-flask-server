@@ -220,9 +220,8 @@ def delete_sop(id):
     db.session.commit()
     return {"message": f"SOP {sop.sop_title} deleted!"}
 
-
 # Get SOPs grouped by Service and Version
-@user_bp.route("/sops_grouped", methods=["GET"])
+@user_bp.route("/home", methods=["GET"])
 def get_sops_grouped():
     # Fetch all services and sops
     services = Service.query.all()
@@ -267,3 +266,31 @@ def get_sops_grouped():
         })
 
     return jsonify(result)
+
+
+# Get all SOPs by alert name, including their service version
+@user_bp.route("/sops/by_alert/<alert_name>", methods=["GET"])
+def get_sops_by_alert(alert_name):
+    # Find all SOPs with the given alert name (case-insensitive)
+    sops = SOP.query.filter(SOP.alert.ilike(alert_name)).all()
+    result = []
+    for sop in sops:
+        service = Service.query.get(sop.service_id)
+        result.append({
+            "id": sop.id,
+            "sop_title": sop.sop_title,
+            "sop_description": sop.sop_description,
+            "sop_link": sop.sop_link,
+            "alert": sop.alert,
+            "created_by": sop.created_by,
+            "last_modified_by": sop.last_modified_by,
+            "created_at": sop.created_at,
+            "updated_at": sop.updated_at,
+            "service": {
+                "id": service.id if service else None,
+                "name": service.name if service else None,
+                "version": service.version if service else None
+            }
+        })
+    return jsonify(result)
+
