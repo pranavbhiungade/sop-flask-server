@@ -135,13 +135,23 @@
 #     app.run(debug=True)
 
 
+
 from flask import Flask
+from flask_cors import CORS
 from models import db
 from routes import register_routes
+
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:Pranav%402003@localhost:3306/flaskdb"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Apply CORS globally, only allow frontend origin
+CORS(app, origins=["http://192.168.64.1:5500"])  # Clean, production-safe
+
+
+
 
 # Initialize DB
 db.init_app(app)
@@ -152,6 +162,7 @@ with app.app_context():
 
 # Register routes
 register_routes(app)
+
 
 
 # Only run the server if executed directly, not when using 'flask run'

@@ -220,38 +220,42 @@ def delete_sop(id):
     db.session.commit()
     return {"message": f"SOP {sop.sop_title} deleted!"}
 
-# Get SOPs grouped by Service and Version
 @user_bp.route("/home", methods=["GET"])
 def get_sops_grouped():
     # Fetch all services and sops
     services = Service.query.all()
     sops = SOP.query.all()
 
-    # Build a mapping: {(service_name, version): [sop, ...]}
-    grouped = defaultdict(lambda: defaultdict(list))
-    service_id_map = {}
-    for service in services:
-        service_id_map[service.id] = (service.name, service.version)
+    # Build a mapping: { service_id: (service_name, version) }
+    service_id_map = {service.id: (service.name, service.version) for service in services}
 
+    # Build grouped structure
+    grouped = defaultdict(lambda: defaultdict(list))
     for sop in sops:
         service_info = service_id_map.get(sop.service_id)
         if not service_info:
             continue
-        name, version = service_info
+        service_name, version = service_info
+
+        # ✅ Use get_user() to fetch full user details
+        created_by_user = get_user(sop.created_by) if sop.created_by else None
+        last_modified_user = get_user(sop.last_modified_by) if sop.last_modified_by else None
+
         sop_obj = {
             "id": sop.id,
+            "alert_name": sop.alert,
             "sop_title": sop.sop_title,
             "sop_description": sop.sop_description,
             "sop_link": sop.sop_link,
-            "alert": sop.alert,
-            "created_by": sop.created_by,
-            "last_modified_by": sop.last_modified_by,
-            "created_at": sop.created_at,
-            "updated_at": sop.updated_at
+            "created_by": created_by_user.get("username") if created_by_user else "Unknown",
+            "last_modified_by": last_modified_user.get("username") if last_modified_user else "Unknown",
+            "created_at": sop.created_at.strftime("%Y-%m-%d %H:%M:%S") if sop.created_at else None,
+            "updated_at": sop.updated_at.strftime("%Y-%m-%d %H:%M:%S") if sop.updated_at else None,
         }
-        grouped[name][version].append(sop_obj)
 
-    # Format as required
+        grouped[service_name][version].append(sop_obj)
+
+    # Format final result
     result = []
     for service_name, versions in grouped.items():
         versions_list = []
