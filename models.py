@@ -20,19 +20,6 @@ class Service(db.Model):
     version = db.Column(db.String(20), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-# class SOP(db.Model):
-#     __tablename__ = "sops"
-#     id = db.Column(db.Integer, primary_key=True)
-#     service_id = db.Column(db.Integer, db.ForeignKey("services.id", ondelete="CASCADE"), nullable=False)
-#     alert = db.Column(db.String(100), nullable=False)
-#     sop_title = db.Column(db.String(100), nullable=False)
-#     sop_description = db.Column(db.Text)
-#     sop_link = db.Column(db.String(255))
-#     created_by = db.Column(db.Integer, db.ForeignKey("users.id"))
-#     last_modified_by = db.Column(db.Integer, db.ForeignKey("users.id"))
-#     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-#     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-
 class SOP(db.Model):
     __tablename__ = "sops"
     id = db.Column(db.Integer, primary_key=True)
