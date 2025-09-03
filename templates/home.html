@@ -32,13 +32,30 @@
     /* Modal override to use dark theme */
     .modal-bg { background: #121212; color: #e0e0e0; }
     .modal-card { background: #1f1f1f; color: #e0e0e0; border-radius: 8px; padding: 16px; }
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: white;
+    }
   </style>
 </head>
 <body>
+   <!-- Users Page Button -->
+  <div class="back-btn">
+  <a href="users.html" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg hover:bg-gray-600" style="text-decoration: none;color: white;">
+    <span class="mr-2">Users</span>
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+    </svg>
+  </a>
+</div>
+
+
   <div id="toast-container" class="fixed top-5 right-5 z-50 space-y-2"></div>
 
   <div class="container">
-    <h1 style="font-size: 48px;" >ActionMap</h1>
+    <h1 style="font-size: 48px; color:white" >ActionMap</h1>
     <form id="search-form" class="max-w-md mx-auto my-6">
   <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
   <div class="relative">
@@ -258,7 +275,6 @@
     alert('Unable to open SOP details.');
   }
 }
-
 
   function hideSOPModal() {
     document.getElementById('sop-modal').classList.add('hidden');
