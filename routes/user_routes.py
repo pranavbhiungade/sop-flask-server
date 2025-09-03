@@ -199,16 +199,47 @@ def update_sop(id):
     sop = SOP.query.get(id)
     if not sop:
         return {"error": "SOP not found"}, 404
-    data = request.get_json()
-    sop.service_id = data.get("service_id", sop.service_id)
-    sop.alert = data.get("alert", sop.alert)
-    sop.sop_title = data.get("sop_title", sop.sop_title)
-    sop.sop_description = data.get("sop_description", sop.sop_description)
-    sop.sop_link = data.get("sop_link", sop.sop_link)
-    sop.created_by = data.get("created_by", sop.created_by)
-    sop.last_modified_by = data.get("last_modified_by", sop.last_modified_by)
-    db.session.commit()
-    return {"message": f"SOP {sop.sop_title} updated!"}
+
+    try:
+        data = request.get_json()
+        if not data:
+            return {"error": "No input data provided"}, 400
+
+        # Allowed fields
+        allowed_fields = [
+            "service_id",
+            "alert",
+            "sop_title",
+            "sop_description",
+            "sop_link",
+            "last_modified_by"
+        ]
+
+        # Update only allowed fields if present
+        for field in allowed_fields:
+            if field in data:
+                setattr(sop, field, data[field])
+
+        db.session.commit()
+
+        return {
+            "message": f"SOP '{sop.sop_title}' updated successfully!",
+            "updated_sop": {
+                "id": sop.id,
+                "service_id": sop.service_id,
+                "alert": sop.alert,
+                "sop_title": sop.sop_title,
+                "sop_description": sop.sop_description,
+                "sop_link": sop.sop_link,
+                "created_by": sop.created_by,
+                "last_modified_by": sop.last_modified_by,
+            }
+        }, 200
+
+    except Exception as e:
+        db.session.rollback()
+        return {"error": f"Update failed: {str(e)}"}, 500
+
 
 # Delete SOP
 @user_bp.route("/sops/<int:id>", methods=["DELETE"])
