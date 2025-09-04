@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Users</title>
-  <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
@@ -13,16 +13,17 @@
       font-family: "Nunito", sans-serif; 
       font-optical-sizing: auto;  
       font-style: normal; 
+      /* The background color is kept as requested */
       background: #121212; 
       margin: 0; 
-      padding: 0; 
+      padding: 2rem; 
       color: #e0e0e0; 
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       flex-direction: column;
-      position: relative; /* so absolute children (like back button) can be positioned */
+      position: relative; 
     }
     .back-btn {
       position: absolute;
@@ -32,7 +33,6 @@
   </style>
 </head>
 <body>
-  <!-- Back Button -->
   <div class="back-btn">
     <a href="home.html" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg hover:bg-gray-600">
       <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -42,22 +42,67 @@
     </a>
   </div>
 
-  <!-- Page Title -->
   <h1 class="text-3xl font-bold mb-6 text-white">👥 Users</h1>
 
-  <!-- User List -->
   <ul id="users-list" class="w-full max-w-md divide-y divide-gray-200 dark:divide-gray-700 bg-gray-800 rounded-lg shadow-lg p-4">
-    <!-- Users will be injected here -->
-  </ul>
+    </ul>
+
+  <div class="mt-6">
+      <button type="button" data-modal-target="add-user-modal" data-modal-toggle="add-user-modal" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          ➕ Add New User
+      </button>
+  </div>
+
+
+  <div id="add-user-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+      <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+          <div class="relative p-4 bg-gray-800 rounded-lg shadow sm:p-5">
+              <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+                  <h3 class="text-lg font-semibold text-white">
+                      Add a New User
+                  </h3>
+                  <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-600 hover:text-white rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="add-user-modal">
+                      <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                      <span class="sr-only">Close modal</span>
+                  </button>
+              </div>
+              <form id="addUserForm">
+                  <div class="grid gap-4 mb-4">
+                      <div>
+                          <label for="username" class="block mb-2 text-sm font-medium text-white">Username</label>
+                          <input type="text" name="username" id="username" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 placeholder-gray-400" placeholder="Type username" required="">
+                      </div>
+                      <div>
+                          <label for="email" class="block mb-2 text-sm font-medium text-white">Email</label>
+                          <input type="email" name="email" id="email" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 placeholder-gray-400" placeholder="name@company.com" required="">
+                      </div>
+                      </div>
+                  <button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                      <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                      Add new user
+                  </button>
+              </form>
+          </div>
+      </div>
+  </div>
+
 
   <script>
+    // --- Existing script to load users ---
     async function loadUsers() {
       try {
         const response = await fetch("http://192.168.64.1:5000/users");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const users = await response.json();
 
         const usersList = document.getElementById("users-list");
         usersList.innerHTML = ""; // clear existing
+
+        if (users.length === 0) {
+            usersList.innerHTML = `<li class="py-3 sm:py-4 text-gray-400 text-center">No users found.</li>`;
+        }
 
         users.forEach(user => {
           const li = document.createElement("li");
@@ -83,13 +128,65 @@
 
       } catch (err) {
         console.error("Failed to load users", err);
+        const usersList = document.getElementById("users-list");
+        usersList.innerHTML = `<li class="py-3 sm:py-4 text-red-400 text-center">Error loading users.</li>`;
       }
     }
 
-    // Load on page load
-    loadUsers();
+    // --- New script to handle adding a user ---
+    async function handleAddUser(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        // Password is now hardcoded as requested
+        const password = "Pranav@2003";
+
+        try {
+            const response = await fetch("http://192.168.64.1:5000/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username: username,
+                    email: email,
+                    password: password 
+                }),
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                alert(`Error: ${result.error || 'Failed to add user'}`);
+                throw new Error(result.error || `HTTP error! status: ${response.status}`);
+            }
+            
+            // --- On success ---
+            const closeButton = document.querySelector('[data-modal-toggle="add-user-modal"]');
+            if (closeButton) {
+                closeButton.click();
+            }
+            document.getElementById('addUserForm').reset();
+            await loadUsers();
+
+        } catch (err) {
+            console.error("Failed to add user:", err);
+        }
+    }
+
+    // Attach event listener to the form
+    document.addEventListener('DOMContentLoaded', () => {
+        loadUsers();
+
+        const addUserForm = document.getElementById('addUserForm');
+        if (addUserForm) {
+            addUserForm.addEventListener('submit', handleAddUser);
+        }
+    });
+
   </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 </body>
 </html>
