@@ -134,8 +134,6 @@
 # if __name__ == "__main__":
 #     app.run(debug=True)
 
-
-
 from flask import Flask
 from flask_cors import CORS
 from models import db
@@ -149,7 +147,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:Pranav%402003@loca
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Apply CORS globally (only allow your frontend)
-CORS(app, origins=["http://192.168.64.1:5501"])
+CORS(app)
 
 # Initialize DB
 db.init_app(app)
@@ -164,7 +162,6 @@ register_routes(app)
 # Run the server
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
-
 
 
 
