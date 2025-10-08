@@ -9,8 +9,11 @@ function showScriptSummaryModal(summaryText) {
 
     titleElement.textContent = "Script Summary";
 
+    // Escape special characters and handle line breaks
+    const sanitizedSummary = sanitizeText(summaryText);
+
     // Inject content. Use whitespace-pre-wrap to respect line breaks in the LONGTEXT field.
-    bodyElement.innerHTML = `<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400 whitespace-pre-wrap">${summaryText}</p>`;
+    bodyElement.innerHTML = `<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400 whitespace-pre-wrap">${sanitizedSummary}</p>`;
     
     // 🌟 Show the modal by removing the 'hidden' class
     modalElement.classList.remove('hidden');
@@ -26,4 +29,17 @@ function hideScriptSummaryModal() {
     modalElement.classList.add('hidden');
     modalElement.classList.remove('flex');
     document.body.style.overflow = 'auto';
+}
+
+// Utility function to sanitize text (escape special characters and handle line breaks)
+function sanitizeText(str) {
+    if (str === null || str === undefined) return "";
+    return String(str)
+        .replace(/&/g, "&amp;")       // Escape &
+        .replace(/</g, "&lt;")       // Escape <
+        .replace(/>/g, "&gt;")       // Escape >
+        .replace(/"/g, "&quot;")     // Escape "
+        .replace(/'/g, "&#39;")      // Escape '
+        .replace(/\n/g, "<br>")      // Convert line breaks to <br>
+        .replace(/\r/g, "");         // Remove carriage returns
 }

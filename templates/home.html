@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
   <style>
     body { font-family: "Nunito", sans-serif; font-optical-sizing: auto;  font-style: normal; background: #121212; margin: 0; padding: 0; color: #e0e0e0; }
-    .container { max-width: 1450px; margin: 40px auto; background: #1e1e1e; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.6); padding: 32px; }
+    .container { max-width: 1560px; margin: 40px auto; background: #1e1e1e; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.6); padding: 32px; }
     h1 { color: #00bcd4; text-align: center; margin-bottom: 24px; }
     h3 { margin: 24px 0 12px 0; color: #ffffff; font-weight: bold; text-align: left; border-left: 4px solid #00bcd4; padding-left: 10px; }
     table { border-collapse: collapse; width: 100%; margin-bottom: 24px; border: 1px solid #333; background: #1a1a1a; }
@@ -44,7 +44,7 @@
    <!-- Users Page Button -->
   <div class="back-btn">
   <a href="users.html" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg hover:bg-gray-600" style="text-decoration: none;color: white;">
-    <span class="mr-2">Users</span>
+    <span class="mr-2"></span>
     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
     </svg>
@@ -70,7 +70,7 @@
     <svg class="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
     </svg>
-    Add SOP
+    Add Row
   </button>
 
 </div>
@@ -116,7 +116,7 @@
         </div>
         <div>
           <label for="service-version" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Version</label>
-          <input type="text" id="service-version" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Enter version" required>
+          <input type="text" id="service-version" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Enter version or 0 ( if version NA )" required>
         </div>
         <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           Add Service
@@ -128,7 +128,7 @@
 
 <!-- Add SOP Modal -->
 <div id="add-sop-modal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-60">
-  <div class="relative p-4 w-full max-w-md max-h-full">
+  <div class="relative p-4 w-full max-w-xl max-h-full"> 
     <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
       <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
@@ -141,33 +141,41 @@
           <span class="sr-only">Close modal</span>
         </button>
       </div>
+      
       <form id="add-sop-form" class="p-4 md:p-5 space-y-4" onsubmit="submitAddSOP(event)">
+        
         <div>
           <label for="add-sop-service" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Service</label>
           <select id="add-sop-service" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
             <option value="">Select a service</option>
           </select>
         </div>
-        <div>
-          <label for="add-sop-alert" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alert Name</label>
-          <input type="text" id="add-sop-alert" placeholder="e.g., High CPU Utilization" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+        
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="add-sop-alert" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alert Name</label>
+              <input type="text" id="add-sop-alert" placeholder="e.g., High CPU Utilization" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+            </div>
+            <div>
+              <label for="add-sop-title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+              <input type="text" id="add-sop-title" placeholder="e.g., SOP for High CPU" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+            </div>
         </div>
-        <div>
-          <label for="add-sop-title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-          <input type="text" id="add-sop-title" placeholder="e.g., SOP for High CPU on Web Servers" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
-        </div>
+
         <div>
           <label for="add-sop-description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-          <textarea id="add-sop-description" rows="2" placeholder="Describe the purpose and steps of this SOP..." class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required></textarea>
-        </div>
-        <div>
-          <label for="add-sop-link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">SOP Link</label>
-          <textarea type="text" id="add-sop-link" placeholder="https://your-wiki.com/sop-link" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"></textarea>
+          <textarea id="add-sop-description" rows="1" placeholder="Describe the purpose and steps of this SOP..." class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required></textarea>
         </div>
         
-        <div>
-          <label for="add-sop-daemon-tool-service" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Daemon Tool Service</label>
-          <input type="text" id="add-sop-daemon-tool-service" placeholder="e.g., systemd-service-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="add-sop-daemon-tool-service" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Daemon Tool Service</label>
+              <input type="text" id="add-sop-daemon-tool-service" placeholder="e.g., systemd-service-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+            </div>
+            <div>
+              <label for="add-sop-link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">SOP Link</label>
+              <input type="text" id="add-sop-link" placeholder="https://your-wiki.com/sop-link" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+            </div>
         </div>
 
         <div>
@@ -181,6 +189,7 @@
             <option value="">Select a user</option>
           </select>
         </div>
+        
         <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           Add SOP
         </button>
@@ -191,6 +200,8 @@
 
 <!-- Modal ends -->
 
+
+
     <form id="search-form" class="max-w-md mx-auto my-6">
   <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
   <div class="relative">
@@ -199,8 +210,8 @@
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
       </svg>
     </div>
-    <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Alert Name" required />
-    <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+    <input type="search" id="alert-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Alert Name or Service Name" required />
+   
   </div>
 
   <!-- Hit/Refresh Button (hidden initially) -->
@@ -244,6 +255,11 @@
   let allSOPData = []; // store all fetched SOPs
   let currentFilter = ""; // search term
 
+  document.getElementById("alert-search").addEventListener("input", function(e) {
+  currentFilter = e.target.value;
+  renderSOPs(allSOPData);
+});
+
   async function fetchGroupedSOPs() {
     try {
       const response = await fetch("http://192.168.64.1:5000/home");
@@ -259,114 +275,98 @@
     }
   }
 
-  function renderSOPs(data) {
-    const container = document.getElementById("sops-content");
-    container.innerHTML = "";
+// ...other code...
 
-    if (!data.length) {
-      container.innerHTML = '<div class="no-data">⚠️ No SOPs found.</div>';
-      return;
-    }
+// ...existing code...
 
-    let html = "";
+// ...existing code...
 
-    data.forEach(serviceObj => {
-      serviceObj.versions.forEach(versionObj => {
-        // Filter SOPs if search is applied
-        const filteredSOPs = versionObj.sops.filter(sop =>
-          sop.alert_name?.toLowerCase().includes(currentFilter.toLowerCase())
-        );
+function renderSOPs(data) {
+  const container = document.getElementById("sops-content");
+  container.innerHTML = "";
 
-        if (filteredSOPs.length === 0) return; // skip if no match
-        const versionHeadingText = (versionObj.version === "0")
-                                   ? "" // Omit version if it's "0"
-                                   : ` | ${escapeHtml(versionObj.version)}`; 
-
-        html += `<h3>${escapeHtml(serviceObj.service)}${versionHeadingText}</h3>`;
-        html += `<div style="overflow-x:auto;"><table><thead><tr>
-
-          <th>Alert Name</th>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Daemon Tool Service</th>
-          <th>Script Summary</th>
-          <th>SOP Link</th>
-          <th>Created By</th>
-          <th>Last Modified By</th>
-          <th>Created At</th>
-          <th>Updated At</th>
-          <th>Actions</th>
-        </tr></thead><tbody>`;
-
-        filteredSOPs.forEach(sop => {
-          const sopData = encodeURIComponent(JSON.stringify(sop));
-          html += `<tr>
-
-            <td>${escapeHtml(sop.alert_name || '-')}</td>
-            <td>${escapeHtml(sop.sop_title || '-')}</td>
-            <td>${escapeHtml(sop.sop_description || '-')}</td>
-            
-            <td>${escapeHtml(sop.daemon_tool_service || '-')}</td>
-           <td>
-  <button 
-    type="button" 
-    title="Show Script Summary"
-    onclick="showScriptSummaryModal('${escapeHtml(sop.script_summary || 'No summary provided')}')"
-    class="block mx-auto p-1 rounded-full 
-           text-gray-800 dark:text-white 
-           hover:text-blue-500 dark:hover:text-blue-400 
-           hover:scale-110 
-           transition duration-150 ease-in-out">
-    
-    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 20 20">
-      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"/>
-    </svg>
-  </button>
-</td>
-           
-
-            <td>
-  ${sop.sop_link ? `
-    <a href="${escapeHtml(sop.sop_link)}" target="_blank" class="open-sop-link flex items-center gap-1 text-blue-600 hover:underline">
-      Open
-      <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.213 9.787a3.391 3.391 0 0 0-4.795 0l-3.425 3.426a3.39 3.39 0 0 0 4.795 4.794l.321-.304m-.321-4.49a3.39 3.39 0 0 0 4.795 0l3.424-3.426a3.39 3.39 0 0 0-4.794-4.795l-1.028.961"/>
-</svg>
-
-    </a>
-  ` : '-'}
-</td>
-
-            <td>${escapeHtml(sop.created_by || '-')}</td>
-            <td>${escapeHtml(sop.last_modified_by || '-')}</td>
-            <td>${escapeHtml(sop.created_at || '-')}</td>
-            <td>${escapeHtml(sop.updated_at || '-')}</td>
-            <td style="display:flex;gap:8px;align-items:center;justify-content:left;">
-              <button class="action-btn edit-btn" title="Edit" onclick='openEditModal(${JSON.stringify(sop)})'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M4 21h17v2H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h2v2H4v17zm16.7-13.3a1 1 0 0 0 0-1.4l-2-2a1 1 0 0 0-1.4 0l-9.6 9.6a1 1 0 0 0-.3.6l-.7 4.2a1 1 0 0 0 1.2 1.2l4.2-.7a1 1 0 0 0 .6-.3l9.6-9.6zm-3.3-1.3 2 2-1.3 1.3-2-2L17.4 6.4zm-9 9 6.6-6.6 2 2-6.6 6.6-2.5.4.5-2.4z"/></svg>
-              </button>
-              <button class="action-btn delete-btn" title="Delete" onclick="deleteSOP(${sop.id})">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M5 6h14v2H5V6zm2 3h10l-1.5 12.5a1 1 0 0 1-1 .5h-5a1 1 0 0 1-1-.5L7 9zm3 2v7h2v-7h-2z"/></svg></button>
-            </td>
-          </tr>`;
-        });
-
-        html += `</tbody></table></div>`;
-      });
-    });
-
-    container.innerHTML = html;
-
-    // reattach events
-    document.querySelectorAll('.open-sop-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const encoded = btn.getAttribute('data-sop');
-        if (!encoded) return;
-        // Ensure showSOPModal is also updated to display the new fields!
-        showSOPModal(encoded);
-      });
-    });
+  if (!data.length) {
+    container.innerHTML = '<div class="no-data">⚠️ No SOPs found.</div>';
+    return;
   }
+
+  let html = "";
+  let foundAny = false;
+
+  data.forEach(serviceObj => {
+    // Check if service name matches the filter
+    const serviceMatches = currentFilter
+      ? serviceObj.service.toLowerCase().includes(currentFilter.toLowerCase())
+      : false;
+
+    serviceObj.versions.forEach(versionObj => {
+      // Filter SOPs by alert name or show all if service matches
+      const filteredSOPs = currentFilter
+        ? versionObj.sops.filter(sop =>
+            serviceMatches ||
+            (sop.alert_name || '').toLowerCase().includes(currentFilter.toLowerCase())
+          )
+        : versionObj.sops;
+
+      if (filteredSOPs.length === 0) return;
+
+      foundAny = true;
+
+      const versionHeadingText = (versionObj.version === "0")
+                                 ? ""
+                                 : ` | ${escapeHtml(versionObj.version)}`; 
+
+      html += `<h3>${escapeHtml(serviceObj.service)}${versionHeadingText}</h3>`;
+      html += `<div style="overflow-x:auto;"><table><thead><tr>
+        <th style="width: 10%;">Alert Name</th>
+        <th style="width: 15%;">Title</th>
+        <th style="width: 20%;">Description</th>
+        <th style="width: 20%;">Daemon Tool Service</th>
+        <th style="width: 35%;">Script Summary</th>
+        <th style="width: 15%;">SOP Link</th>
+        <th>Created By</th>
+        <th>Last Modified By</th>
+        <th>Created At</th>
+        <th>Updated At</th>
+        <th style="width: 7%;">Actions</th>
+      </tr></thead><tbody>`;
+
+      filteredSOPs.forEach((sop, index) => {
+        const uniqueRowId = `${serviceObj.service}-${versionObj.version}-${index}`;
+        html += `<tr id="row-${uniqueRowId}">
+          <td>${escapeHtml(sop.alert_name || '-')}</td>
+          <td>${escapeHtml(sop.sop_title || '-')}</td>
+          <td>${escapeHtml(sop.sop_description || '-')}</td>
+          <td>${escapeHtml(sop.daemon_tool_service || '-')}</td>
+          <td>${escapeHtml(sop.script_summary || 'No summary provided')}</td>
+          <td>${sop.sop_link ? `<a href="${escapeHtml(sop.sop_link)}" target="_blank" class="open-sop-link flex items-center gap-1 text-blue-600 hover:underline">Open</a>` : '-'}</td>
+          <td>${escapeHtml(sop.created_by || '-')}</td>
+          <td>${escapeHtml(sop.last_modified_by || '-')}</td>
+          <td>${escapeHtml(sop.created_at || '-')}</td>
+          <td>${escapeHtml(sop.updated_at || '-')}</td>
+          <td>
+            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 12px; height: 100%;">
+              <button class="action-btn edit-btn" title="Edit" style="display: flex; align-items: center; justify-content: center;" onclick='enableInlineEditing("${uniqueRowId}", ${sop.id})'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M4 21h17v2H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h2v2H4v17zm16.7-13.3a1 1 0 0 0 0-1.4l-2-2a1 1 0 0 0-1.4 0l-9.6 9.6a1 1 0 0 0-.3.6l-.7 4.2a1 1 0 0 0 1.2 1.2l4.2-.7a1 1 0 0 0 .6-.3l9.6-9.6zm-3.3-1.3 2 2-1.3 1.3-2-2L17.4 6.4zm-9 9 6.6-6.6 2 2-6.6 6.6-2.5.4.5-2.4z"/></svg>
+              </button>
+              <button class="action-btn delete-btn" title="Delete" style="display: flex; align-items: center; justify-content: center;" onclick="deleteSOP(${sop.id})">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M5 6h14v2H5V6zm2 3h10l-1.5 12.5a1 1 0 0 1-1 .5h-5a1 1 0 0 1-1-.5L7 9zm3 2v7h2v-7h-2z"/></svg>
+              </button>
+            </div>
+          </td>
+        </tr>`;
+      });
+
+      html += `</tbody></table></div>`;
+    });
+  });
+
+  if (!foundAny) {
+    container.innerHTML = '<div class="no-data">⚠️ No SOPs found for this alert or service name.</div>';
+  } else {
+    container.innerHTML = html;
+  }
+}
 
   // Handle search form
   document.querySelector("form").addEventListener("submit", (e) => {
@@ -750,6 +750,7 @@
   <script src="services_dropdown.js" defer></script>
   <script src="add_service.js" defer></script>
   <script src="add_sop.js" defer></script>
+  <script src="edit_sop.js" defer></script>
   <script src="show_summary.js" defer></script>
 </body>
 </html>
