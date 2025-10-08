@@ -31,8 +31,14 @@ document.addEventListener('DOMContentLoaded', () => {
         link.href = '#'; // Set a placeholder link
         link.className = 'block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white';
         
-        // 3. Set the text content with the service name and version
-        link.textContent = `${service.name} (v${service.version})`;
+        // 🌟 CONDITIONAL LOGIC ADDED HERE 🌟
+        // Determine the version text: if version is "0", use an empty string, otherwise format it with "(v...)"
+        const versionText = (service.version === "0") 
+                            ? "" 
+                            : ` (v${service.version})`;
+        
+        // 3. Set the text content with the service name and the conditional version text
+        link.textContent = `${service.name}${versionText}`;
         
         // 4. Put the link inside the list item, and the list item inside the <ul>
         listItem.appendChild(link);

@@ -131,7 +131,7 @@ def delete_service(id):
 
 # ------------------- SOP ROUTES -------------------
 
-# Create SOP
+# 1. Create SOP
 @user_bp.route("/sops", methods=["POST"])
 def add_sop():
     data = request.get_json()
@@ -140,16 +140,28 @@ def add_sop():
     sop_title = data.get("sop_title")
     sop_description = data.get("sop_description")
     sop_link = data.get("sop_link")
+    
+    # 🌟 NEW FIELDS
+    daemon_tool_service = data.get("daemon_tool_service")
+    script_summary = data.get("script_summary")
+    
     created_by = data.get("created_by")
     last_modified_by = data.get("last_modified_by")
+    
     if not service_id or not alert or not sop_title:
         return {"error": "service_id, alert, and sop_title are required"}, 400
+    
     sop = SOP(
         service_id=service_id,
         alert=alert,
         sop_title=sop_title,
         sop_description=sop_description,
         sop_link=sop_link,
+        
+        # 🌟 Initialize new fields
+        daemon_tool_service=daemon_tool_service,
+        script_summary=script_summary,
+        
         created_by=created_by,
         last_modified_by=last_modified_by
     )
@@ -157,7 +169,7 @@ def add_sop():
     db.session.commit()
     return {"message": f"SOP {sop_title} added!"}, 201
 
-# Read all SOPs
+# 2. Read All SOPs
 @user_bp.route("/sops", methods=["GET"])
 def get_sops():
     sops = SOP.query.all()
@@ -168,13 +180,17 @@ def get_sops():
         "sop_title": s.sop_title,
         "sop_description": s.sop_description,
         "sop_link": s.sop_link,
+        # 🌟 Include new fields
+        "daemon_tool_service": s.daemon_tool_service,
+        "script_summary": s.script_summary,
+        
         "created_by": s.created_by,
         "last_modified_by": s.last_modified_by,
         "created_at": s.created_at,
         "updated_at": s.updated_at
     } for s in sops])
 
-# Read single SOP
+# 3. Read Single SOP
 @user_bp.route("/sops/<int:id>", methods=["GET"])
 def get_sop(id):
     sop = SOP.query.get(id)
@@ -187,13 +203,17 @@ def get_sop(id):
         "sop_title": sop.sop_title,
         "sop_description": sop.sop_description,
         "sop_link": sop.sop_link,
+        # 🌟 Include new fields
+        "daemon_tool_service": sop.daemon_tool_service,
+        "script_summary": sop.script_summary,
+        
         "created_by": sop.created_by,
         "last_modified_by": sop.last_modified_by,
         "created_at": sop.created_at,
         "updated_at": sop.updated_at
     }
 
-# Update SOP
+# 4. Update SOP
 @user_bp.route("/sops/<int:id>", methods=["PUT"])
 def update_sop(id):
     sop = SOP.query.get(id)
@@ -205,13 +225,15 @@ def update_sop(id):
         if not data:
             return {"error": "No input data provided"}, 400
 
-        # Allowed fields
+        # 🌟 UPDATED Allowed fields
         allowed_fields = [
             "service_id",
             "alert",
             "sop_title",
             "sop_description",
             "sop_link",
+            "daemon_tool_service", # 🌟 ADDED
+            "script_summary",      # 🌟 ADDED
             "last_modified_by"
         ]
 
@@ -231,6 +253,10 @@ def update_sop(id):
                 "sop_title": sop.sop_title,
                 "sop_description": sop.sop_description,
                 "sop_link": sop.sop_link,
+                # 🌟 Include new fields in response
+                "daemon_tool_service": sop.daemon_tool_service,
+                "script_summary": sop.script_summary,
+                
                 "created_by": sop.created_by,
                 "last_modified_by": sop.last_modified_by,
             }
@@ -241,7 +267,7 @@ def update_sop(id):
         return {"error": f"Update failed: {str(e)}"}, 500
 
 
-# Delete SOP
+# 5. Delete SOP
 @user_bp.route("/sops/<int:id>", methods=["DELETE"])
 def delete_sop(id):
     sop = SOP.query.get(id)
@@ -250,6 +276,8 @@ def delete_sop(id):
     db.session.delete(sop)
     db.session.commit()
     return {"message": f"SOP {sop.sop_title} deleted!"}
+
+# --- GROUPING AND SEARCH ROUTES ---
 
 @user_bp.route("/home", methods=["GET"])
 def get_sops_grouped():
@@ -268,7 +296,6 @@ def get_sops_grouped():
             continue
         service_name, version = service_info
 
-        # ✅ Use get_user() to fetch full user details
         created_by_user = get_user(sop.created_by) if sop.created_by else None
         last_modified_user = get_user(sop.last_modified_by) if sop.last_modified_by else None
 
@@ -278,6 +305,10 @@ def get_sops_grouped():
             "sop_title": sop.sop_title,
             "sop_description": sop.sop_description,
             "sop_link": sop.sop_link,
+            # 🌟 Include new fields
+            "daemon_tool_service": sop.daemon_tool_service,
+            "script_summary": sop.script_summary,
+            
             "created_by": created_by_user.get("username") if created_by_user else "Unknown",
             "last_modified_by": last_modified_user.get("username") if last_modified_user else "Unknown",
             "created_at": sop.created_at.strftime("%Y-%m-%d %H:%M:%S") if sop.created_at else None,
@@ -316,6 +347,10 @@ def get_sops_by_alert(alert_name):
             "sop_title": sop.sop_title,
             "sop_description": sop.sop_description,
             "sop_link": sop.sop_link,
+            # 🌟 Include new fields
+            "daemon_tool_service": sop.daemon_tool_service,
+            "script_summary": sop.script_summary,
+            
             "alert": sop.alert,
             "created_by": sop.created_by,
             "last_modified_by": sop.last_modified_by,
@@ -328,4 +363,3 @@ def get_sops_by_alert(alert_name):
             }
         })
     return jsonify(result)
-

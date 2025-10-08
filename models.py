@@ -28,6 +28,8 @@ class SOP(db.Model):
     sop_title = db.Column(db.String(100), nullable=False)
     sop_description = db.Column(db.Text)
     sop_link = db.Column(db.Text)  # 🔥 changed from String(255) to Text
+    daemon_tool_service = db.Column(db.Text) 
+    script_summary = db.Column(db.Text) 
     created_by = db.Column(db.Integer, db.ForeignKey("users.id"))
     last_modified_by = db.Column(db.Integer, db.ForeignKey("users.id"))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

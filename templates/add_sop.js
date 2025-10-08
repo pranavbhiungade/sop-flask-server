@@ -22,12 +22,20 @@ async function populateServicesDropdown() {
     dropdown.innerHTML = '<option value="">Select a service</option>';
 
     // Add options dynamically
-    services.forEach(service => {
-      const option = document.createElement("option");
-      option.value = service.id; // Store service ID
-      option.textContent = `${service.name} (v${service.version})`; // Show service name and version
-      dropdown.appendChild(option);
-    });
+   services.forEach(service => {
+  const option = document.createElement("option");
+  option.value = service.id; // Store service ID
+  
+  // 1. Check if the version is the string "0"
+  const versionText = (service.version === "0") 
+                      ? "" // If it's "0", use an empty string
+                      : ` (v${service.version})`; // Otherwise, use the standard version format
+  
+  // 2. Set the text content
+  option.textContent = `${service.name}${versionText}`; // Combine name and the conditionally formatted version
+  
+  dropdown.appendChild(option);
+});
 
   } catch (error) {
     console.error("Error fetching services:", error);
@@ -74,8 +82,15 @@ async function submitAddSOP(event) {
   const title = document.getElementById('add-sop-title').value.trim();
   const description = document.getElementById('add-sop-description').value.trim();
   const link = document.getElementById('add-sop-link').value.trim();
+  
+  // 🌟 READ NEW FIELD VALUES
+  const daemonToolService = document.getElementById('add-sop-daemon-tool-service').value.trim();
+  const scriptSummary = document.getElementById('add-sop-script-summary').value.trim();
+  
   const createdBy = document.getElementById('add-sop-created-by').value;
 
+  // Note: daemonToolService and scriptSummary are NOT required fields in your model (based on the Flask route),
+  // so the validation check remains the same.
   if (!serviceId || !alertName || !title || !description || !createdBy) {
     alert('Please fill in all required fields.');
     return;
@@ -91,6 +106,11 @@ async function submitAddSOP(event) {
         sop_title: title,
         sop_description: description,
         sop_link: link,
+        
+        // 🌟 INCLUDE NEW FIELDS IN PAYLOAD
+        daemon_tool_service: daemonToolService,
+        script_summary: scriptSummary,
+        
         created_by: createdBy,
       }),
     });
@@ -101,7 +121,7 @@ async function submitAddSOP(event) {
       return;
     }
 
-    alert('SOP added successfully!');
+    alert('SOP added successfully! 🎉');
     hideAddSOPModal();
     location.reload(); // Reload the page to reflect the new SOP
   } catch (error) {
@@ -109,4 +129,3 @@ async function submitAddSOP(event) {
     alert('Something went wrong. Please try again.');
   }
 }
-
