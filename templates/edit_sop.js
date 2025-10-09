@@ -117,7 +117,9 @@ function cancelEdit(rowId, sopId) {
     <td>${escapeHtml(sop.sop_title || '-')}</td>
     <td>${escapeHtml(sop.sop_description || '-')}</td>
     <td>${escapeHtml(sop.daemon_tool_service || '-')}</td>
-    <td>${escapeHtml(sop.script_summary || 'No summary provided')}</td>
+    <td style="white-space: pre-line; text-align: justify; word-break: break-word;">
+  ${escapeHtml(sop.script_summary || 'No summary provided')}
+        </td>
     <td>${sop.sop_link ? `<a href="${escapeHtml(sop.sop_link)}" target="_blank" class="open-sop-link flex items-center gap-1 text-blue-600 hover:underline">Open</a>` : '-'}</td>
     <td>${escapeHtml(sop.created_by || '-')}</td>
     <td>${escapeHtml(sop.last_modified_by || '-')}</td>
