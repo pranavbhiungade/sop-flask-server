@@ -24,7 +24,7 @@ class SOP(db.Model):
     __tablename__ = "sops"
     id = db.Column(db.Integer, primary_key=True)
     service_id = db.Column(db.Integer, db.ForeignKey("services.id", ondelete="CASCADE"), nullable=False)
-    alert = db.Column(db.String(100), nullable=False)
+    alert = db.Column(db.Text, nullable=False)
     sop_title = db.Column(db.String(100), nullable=False)
     sop_description = db.Column(db.Text)
     sop_link = db.Column(db.Text)  # 🔥 changed from String(255) to Text
