@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
   <style>
     body { font-family: "Nunito", sans-serif; font-optical-sizing: auto;  font-style: normal; background: #121212; margin: 0; padding: 0; color: #e0e0e0; }
-    .container { max-width: 1560px; margin: 40px auto; background: #1e1e1e; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.6); padding: 32px; }
+    .container { max-width: 1710px; margin: 40px auto; background: #1e1e1e; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.6); padding: 32px; }
     h1 { color: #00bcd4; text-align: center; margin-bottom: 24px; }
     h3 { margin: 24px 0 12px 0; color: #ffffff; font-weight: bold; text-align: left; border-left: 4px solid #00bcd4; padding-left: 10px; }
     table { border-collapse: collapse; width: 100%; margin-bottom: 24px; border: 1px solid #333; background: #1a1a1a; }
@@ -42,14 +42,7 @@
 </head>
 <body>
    <!-- Users Page Button -->
-  <div class="back-btn">
-  <a href="users.html" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg hover:bg-gray-600" style="text-decoration: none;color: white;">
-    <span class="mr-2"></span>
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-  </a>
-</div>
+  
 
 
   <div id="toast-container" class="fixed top-5 right-5 z-50 space-y-2"></div>
@@ -57,22 +50,29 @@
   <div class="container">
     <h1 style="font-size: 48px; color:white" >ActionMap</h1>
 
-    <div class="flex items-center gap-4">
-
-  <button id="dropdownDividerButton" data-dropdown-toggle="dropdownDivider" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-    Services
-    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+   <div class="flex items-center justify-between gap-4">
+  <div class="flex items-center gap-4">
+    <button id="dropdownDividerButton" data-dropdown-toggle="dropdownDivider" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+      Services
+      <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+      </svg>
+    </button>
+    <button type="button" onclick="showAddSOPModal()" class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+      <svg class="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
+      </svg>
+      Add Row
+    </button>
+  </div>
+  <button onclick="window.location.href='users.html'"
+    class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gray-700 rounded-lg hover:bg-gray-600"
+    style="text-decoration: none; color: white;">
+    <span class="mr-2">Users</span>
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
     </svg>
   </button>
-
-  <button type="button" onclick="showAddSOPModal()" class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-    <svg class="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
-    </svg>
-    Add Row
-  </button>
-
 </div>
 
 <div id="dropdownDivider" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-56 dark:bg-gray-700 dark:divide-gray-600">
@@ -132,7 +132,7 @@
     <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
       <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-          Add SOP
+          Add Row
         </h3>
         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onclick="hideAddSOPModal()">
           <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -154,33 +154,33 @@
         <div class="grid grid-cols-2 gap-4">
             <div>
               <label for="add-sop-alert" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alert Name</label>
-              <input type="text" id="add-sop-alert" placeholder="e.g., High CPU Utilization" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+              <input type="text" id="add-sop-alert" placeholder="e.g., cpu, load and memory alerts" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
             </div>
             <div>
               <label for="add-sop-title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-              <input type="text" id="add-sop-title" placeholder="e.g., SOP for High CPU" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+              <input type="text" id="add-sop-title" placeholder="e.g., SOP for system alerts" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
             </div>
         </div>
 
         <div>
           <label for="add-sop-description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-          <textarea id="add-sop-description" rows="1" placeholder="Describe the purpose and steps of this SOP..." class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required></textarea>
+          <textarea id="add-sop-description" rows="1" placeholder="comments" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required></textarea>
         </div>
         
         <div class="grid grid-cols-2 gap-4">
             <div>
               <label for="add-sop-daemon-tool-service" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Daemon Tool Service</label>
-              <input type="text" id="add-sop-daemon-tool-service" placeholder="e.g., systemd-service-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+              <input type="text" id="add-sop-daemon-tool-service" placeholder="e.g., riemann-health" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
             </div>
             <div>
               <label for="add-sop-link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">SOP Link</label>
-              <input type="text" id="add-sop-link" placeholder="https://your-wiki.com/sop-link" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+              <input type="text" id="add-sop-link" placeholder="Gitlab repo or Google doc link" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
             </div>
         </div>
 
         <div>
           <label for="add-sop-script-summary" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Script Summary</label>
-          <textarea id="add-sop-script-summary" rows="4" placeholder="Brief summary of the automation script logic..." class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"></textarea>
+          <textarea id="add-sop-script-summary" rows="4" placeholder="Brief summary of the alerting script logic..." class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"></textarea>
         </div>
         
         <div>
@@ -318,12 +318,12 @@ function renderSOPs(data) {
 
       html += `<h3>${escapeHtml(serviceObj.service)}${versionHeadingText}</h3>`;
       html += `<div style="overflow-x:auto;"><table><thead><tr>
-        <th style="width: 10%;">Alert Name</th>
+        <th style="width: 15%;">Alert Name</th>
         <th style="width: 15%;">Title</th>
         <th style="width: 20%;">Description</th>
-        <th style="width: 20%;">Daemon Tool Service</th>
-        <th style="width: 35%;">Script Summary</th>
-        <th style="width: 15%;">SOP Link</th>
+        <th style="width: 10%;">Daemon Tool Service</th>
+        <th style="width: 10%;">Script Summary</th>
+        <th style="width: 10%;">SOP Link</th>
         <th>Created By</th>
         <th>Last Modified By</th>
         <th>Created At</th>
@@ -334,12 +334,35 @@ function renderSOPs(data) {
       filteredSOPs.forEach((sop, index) => {
         const uniqueRowId = `${serviceObj.service}-${versionObj.version}-${index}`;
         html += `<tr id="row-${uniqueRowId}">
-          <td>${escapeHtml(sop.alert_name || '-')}</td>
+      <td>
+  ${(sop.alert_name || '-')
+    .split(',')
+    .map(a => a.trim())
+    .map(a => a.replace(/</g, '&lt;').replace(/>/g, '&gt;')) // Escape angle brackets
+    .join('<br>')}
+</td>
           <td>${escapeHtml(sop.sop_title || '-')}</td>
           <td>${escapeHtml(sop.sop_description || '-')}</td>
           <td>${escapeHtml(sop.daemon_tool_service || '-')}</td>
-          <td>${escapeHtml(sop.script_summary || 'No summary provided')}</td>
-          <td>${sop.sop_link ? `<a href="${escapeHtml(sop.sop_link)}" target="_blank" class="open-sop-link flex items-center gap-1 text-blue-600 hover:underline">Open</a>` : '-'}</td>
+         
+<td style="white-space: pre-line; text-align: center; word-break: break-word;">
+  <a href="script_summary.html?summary=${encodeURIComponent(sop.script_summary || '')}&sopId=${sop.id}" 
+     style="color:#03a9f4;cursor:pointer;text-decoration:underline; display: block;">
+    <svg class="w-6 h-6 text-gray-800 dark:text-white mx-auto" 
+         aria-hidden="true" 
+         xmlns="http://www.w3.org/2000/svg" 
+         width="24" height="24" 
+         fill="currentColor" 
+         viewBox="0 0 24 24">
+      <path fill-rule="evenodd" d="M11.403 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6.403a3.01 3.01 0 0 1-1.743-1.612l-3.025 3.025A3 3 0 1 1 9.99 9.768l3.025-3.025A3.01 3.01 0 0 1 11.403 5Z" clip-rule="evenodd"/>
+      <path fill-rule="evenodd" d="M13.232 4a1 1 0 0 1 1-1H20a1 1 0 0 1 1 1v5.768a1 1 0 1 1-2 0V6.414l-6.182 6.182a1 1 0 0 1-1.414-1.414L17.586 5h-3.354a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
+    </svg>
+  </a>
+</td>
+          <td>${sop.sop_link ? `<a href="${escapeHtml(sop.sop_link)}" target="_blank" class="open-sop-link flex items-center gap-1 text-blue-600 hover:underline text-center"><svg class="w-6 h-6 text-gray-800 dark:text-white mx-auto" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.213 9.787a3.391 3.391 0 0 0-4.795 0l-3.425 3.426a3.39 3.39 0 0 0 4.795 4.794l.321-.304m-.321-4.49a3.39 3.39 0 0 0 4.795 0l3.424-3.426a3.39 3.39 0 0 0-4.794-4.795l-1.028.961"/>
+</svg>
+</a>` : '-'}</td>
           <td>${escapeHtml(sop.created_by || '-')}</td>
           <td>${escapeHtml(sop.last_modified_by || '-')}</td>
           <td>${escapeHtml(sop.created_at || '-')}</td>
@@ -745,6 +768,7 @@ function renderSOPs(data) {
     </div>
   </div>
 </div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
   <script src="services_dropdown.js" defer></script>

@@ -113,12 +113,34 @@ function cancelEdit(rowId, sopId) {
 
     // Restore the original row content
     row.innerHTML = `
-    <td>${escapeHtml(sop.alert_name || '-')}</td>
+   <td>
+  ${(sop.alert_name || '-')
+    .split(',')
+    .map(a => a.trim())
+    .map(a => a.replace(/</g, '&lt;').replace(/>/g, '&gt;')) // Escape angle brackets
+    .join('<br>')}
+</td>
     <td>${escapeHtml(sop.sop_title || '-')}</td>
     <td>${escapeHtml(sop.sop_description || '-')}</td>
     <td>${escapeHtml(sop.daemon_tool_service || '-')}</td>
-    <td>${escapeHtml(sop.script_summary || 'No summary provided')}</td>
-    <td>${sop.sop_link ? `<a href="${escapeHtml(sop.sop_link)}" target="_blank" class="open-sop-link flex items-center gap-1 text-blue-600 hover:underline">Open</a>` : '-'}</td>
+    <td style="white-space: pre-line; text-align: center; word-break: break-word;">
+  <a href="script_summary.html?summary=${encodeURIComponent(sop.script_summary || '')}&sopId=${sop.id}" 
+     style="color:#03a9f4;cursor:pointer;text-decoration:underline; display: block;">
+    <svg class="w-6 h-6 text-gray-800 dark:text-white mx-auto" 
+         aria-hidden="true" 
+         xmlns="http://www.w3.org/2000/svg" 
+         width="24" height="24" 
+         fill="currentColor" 
+         viewBox="0 0 24 24">
+      <path fill-rule="evenodd" d="M11.403 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6.403a3.01 3.01 0 0 1-1.743-1.612l-3.025 3.025A3 3 0 1 1 9.99 9.768l3.025-3.025A3.01 3.01 0 0 1 11.403 5Z" clip-rule="evenodd"/>
+      <path fill-rule="evenodd" d="M13.232 4a1 1 0 0 1 1-1H20a1 1 0 0 1 1 1v5.768a1 1 0 1 1-2 0V6.414l-6.182 6.182a1 1 0 0 1-1.414-1.414L17.586 5h-3.354a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
+    </svg>
+  </a>
+</td>
+      <td>${sop.sop_link ? `<a href="${escapeHtml(sop.sop_link)}" target="_blank" class="open-sop-link flex items-center gap-1 text-blue-600 hover:underline text-center"><svg class="w-6 h-6 text-gray-800 dark:text-white mx-auto" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.213 9.787a3.391 3.391 0 0 0-4.795 0l-3.425 3.426a3.39 3.39 0 0 0 4.795 4.794l.321-.304m-.321-4.49a3.39 3.39 0 0 0 4.795 0l3.424-3.426a3.39 3.39 0 0 0-4.794-4.795l-1.028.961"/>
+</svg>
+</a>` : '-'}</td>
     <td>${escapeHtml(sop.created_by || '-')}</td>
     <td>${escapeHtml(sop.last_modified_by || '-')}</td>
     <td>${escapeHtml(sop.created_at || '-')}</td>

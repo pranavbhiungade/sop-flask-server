@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Script Summary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: #1e1e1e;
+      color: #222;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #2b2b2b;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.07);
+      padding: 32px;
+    }
+    .summary-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: #03a9f4;
+    }
+    .summary-content {
+      white-space: pre-line;
+      text-align: justify;
+      word-break: break-word;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #ffffff;
+      margin-bottom: 32px;
+    }
+    .edit-btn {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: 16px;
+      transition: background 0.2s;
+    }
+    .edit-btn:hover {
+      background: #1e40af;
+    }
+    .save-btn {
+      background: #22c55e;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      margin-right: 8px;
+      transition: background 0.2s;
+    }
+    .cancel-btn {
+      background: #64748b;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      font-size: 1.1rem;
+      font-family: inherit;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 24px;
+      resize: vertical;
+      background:  #2b2b2b;
+      color: #fefeff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="summary-title">Script Summary</div>
+    <div id="summary-content" class="summary-content"></div>
+    <button id="edit-summary-btn" class="edit-btn">Edit Summary</button>
+    <div id="edit-summary-section" style="display:none;">
+      <textarea id="edit-summary-text"></textarea>
+      <div>
+        <button id="save-summary-btn" class="save-btn">Save</button>
+        <button id="cancel-summary-btn" class="cancel-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <script src="templates/edit_sop.js"></script>
+  <script>
+    // Get summary from URL
+    const params = new URLSearchParams(window.location.search);
+    const summary = params.get('summary') || 'No summary provided';
+    const sopId = params.get('sopId'); // Pass sopId in URL for editing
+
+    const summaryContent = document.getElementById('summary-content');
+    const editBtn = document.getElementById('edit-summary-btn');
+    const editSection = document.getElementById('edit-summary-section');
+    const editTextarea = document.getElementById('edit-summary-text');
+    const saveBtn = document.getElementById('save-summary-btn');
+    const cancelBtn = document.getElementById('cancel-summary-btn');
+
+    summaryContent.textContent = summary;
+
+    editBtn.onclick = function() {
+      editSection.style.display = '';
+      editBtn.style.display = 'none';
+      editTextarea.value = summary;
+      summaryContent.style.display = 'none';
+    };
+
+    cancelBtn.onclick = function() {
+      editSection.style.display = 'none';
+      editBtn.style.display = '';
+      summaryContent.style.display = '';
+    };
+
+    saveBtn.onclick = function() {
+      const newSummary = editTextarea.value;
+      if (!sopId) {
+        alert("SOP ID missing. Cannot save.");
+        return;
+      }
+      // Call saveRow from edit_sop.js
+      // Only update script_summary field
+      fetch(`http://192.168.64.1:5000/sops/${sopId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ script_summary: newSummary }),
+      })
+      .then(async response => {
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || 'Failed to update summary');
+        }
+        return response.json();
+      })
+      .then(data => {
+        summaryContent.textContent = newSummary;
+        editSection.style.display = 'none';
+        editBtn.style.display = '';
+        summaryContent.style.display = '';
+        alert(data.message || 'Summary updated!');
+      })
+      .catch(err => {
+        console.error('Error updating summary:', err);
+        alert('Failed to update summary. Please try again.');
+      });
+    };
+  </script>
+</body>
+</html>
